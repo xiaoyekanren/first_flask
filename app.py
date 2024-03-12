@@ -1,6 +1,6 @@
 import os.path
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from function.iotdb_example import IoTDBExample
 
 app = Flask(__name__)
@@ -18,6 +18,14 @@ def index():
         name=123,
         iotdb_version=iotdb_version
     )
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    number = request.form['number']
+    print(number)
+    # 然后，你可以返回一个响应，比如一个确认页面或者重定向到首页
+    return f'You submitted the number: {number}'
 
 
 @app.route('/hello')
