@@ -18,10 +18,15 @@ class IoTDBExample:
 
     def query(self, sql):
         conn = self.connect()
-        conn.open(False)
-        data = conn.execute_query_statement(sql)
-        format_data = self.format_query_results(data)
-        conn.close()
+        try:
+            conn.open(False)
+            data = conn.execute_query_statement(sql)
+            format_data = self.format_query_results(data)
+        except Exception as e:
+            print(f'Error: {e}')
+            format_data = [[e]]
+        finally:
+            conn.close()
         return format_data
 
     @staticmethod

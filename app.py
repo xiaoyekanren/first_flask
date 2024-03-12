@@ -11,11 +11,12 @@ iotdb = IoTDBExample()
 @app.route('/')
 def index():
     iotdb_version = iotdb.query('show version')[0]
+    iotdb_version = '-'.join(iotdb_version[1:]) if len(iotdb_version) > 1 else iotdb_version[0]  # 有版本打版本，无版本打报错
 
     return render_template(
         'bootstrap.html',
         name=123,
-        iotdb_version='-'.join(iotdb_version[1:])
+        iotdb_version=iotdb_version
     )
 
 
